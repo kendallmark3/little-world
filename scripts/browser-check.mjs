@@ -21,7 +21,7 @@ try {
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
 
-  await page.goto(`http://localhost:${port}/?fresh&seed=42`);
+  await page.goto(`http://localhost:${port}/little-world.html?fresh&seed=42`);
   await page.waitForTimeout(1500);
   const t0 = await page.evaluate(() => window.littleWorld.sim.state.tick);
   await page.waitForTimeout(2000);
@@ -106,7 +106,7 @@ try {
 
   // Save and reload
   const saved = await page.evaluate(() => { window.littleWorld.save(); const s = window.littleWorld.sim.state; return { tick: s.tick, pop: s.people.length, seed: s.seed }; });
-  await page.goto(`http://localhost:${port}/`);
+  await page.goto(`http://localhost:${port}/little-world.html`);
   await page.waitForTimeout(800);
   const restored = await page.evaluate(() => { const s = window.littleWorld.sim.state; return { tick: s.tick, pop: s.people.length, seed: s.seed }; });
   check('reload restores the same civilization', restored.seed === saved.seed && restored.tick >= saved.tick && restored.tick - saved.tick < 200 && restored.pop === saved.pop, `${JSON.stringify(saved)} → ${JSON.stringify(restored)}`);
@@ -114,7 +114,7 @@ try {
   // Mobile layout
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true });
   mobile.on('pageerror', (e) => errors.push(e.message));
-  await mobile.goto(`http://localhost:${port}/?fresh&seed=42`);
+  await mobile.goto(`http://localhost:${port}/little-world.html?fresh&seed=42`);
   await mobile.waitForTimeout(2500);
   await mobile.screenshot({ path: `${out}/05-mobile.png` });
 

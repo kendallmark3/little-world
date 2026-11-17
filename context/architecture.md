@@ -3,7 +3,10 @@
 Static browser app. No backend, no build step, no runtime dependencies.
 
 ```
-index.html, styles.css      page shell (LTM design: white, quiet grays, one blue accent)
+index.html                  Choose Your World — links to both simulations
+little-world.html, styles.css  Little World page shell (LTM design: white, quiet grays, one blue accent)
+agent-world.html, agentworld.css  Agent World page (INTENT-002) — see context/agent-world.md
+src/agentworld/             Agent World simulation — pure, deterministic, reuses src/sim/ rng, path, clock, world
 src/sim/                    the simulation — pure, deterministic, no DOM
   rng.js                    seeded mulberry32; generator state lives in state.rng
   world.js                  map generation and placement rules (trees, houses, fields)
@@ -11,13 +14,17 @@ src/sim/                    the simulation — pure, deterministic, no DOM
   sim.js                    inhabitants, occupations, economy, construction, log, save/restore
   clock.js                  real time -> simulation ticks (pause, 1x/3x/10x/30x)
 src/ui/
-  render.js                 canvas renderer; reads state, never writes it
+  render.js                 canvas renderer; reads state, never writes it (terrain/people/trees exported for reuse)
+  agentworld-render.js      Agent World rendering adapter (reuses render.js)
+  agentworld-main.js        Agent World loop, inspectors, feed, dashboard, controls
   main.js                   loop, input, panel, localStorage persistence
   score.js                  pure soundtrack rules: piano phrases, sound modes, pause/night mix
   ambience.js               Web Audio engine: synthesized waves + piano (real time, ignores sim speed)
 tests/sim.test.js           deterministic rule tests (node:test)
 tests/score.test.js         soundtrack rule tests
-scripts/                    serve.mjs (local server), soak.mjs (headless days), browser-check.mjs (Playwright smoke)
+tests/agentworld.test.js    Agent World decisions, signals, resources, integrity, determinism
+scripts/                    serve.mjs (local server), soak.mjs (headless days), browser-check.mjs (Playwright smoke),
+                            agent-experiment.mjs (INTENT-002 evidence), agent-world-check.mjs (Agent World Playwright)
 ```
 
 ## Key decisions
