@@ -511,4 +511,4 @@ renderLegend();
 newExperiment();
 requestAnimationFrame(frame);
 
-window.agentWorld = { get sim() { return sim; }, clock, renderer, select, TICK_SECONDS, ACTIONS };
+window.agentWorld = { get sim() { return sim; }, clock, renderer, ambience, select, TICK_SECONDS, ACTIONS };
