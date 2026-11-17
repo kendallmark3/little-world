@@ -114,13 +114,25 @@ $('play').addEventListener('click', () => setPaused(!clock.paused));
 for (const b of document.querySelectorAll('#speeds button')) b.addEventListener('click', () => setSpeed(Number(b.dataset.speed)));
 for (const b of document.querySelectorAll('#tools button')) b.addEventListener('click', () => setTool(b.dataset.tool));
 $('food').addEventListener('click', () => { addFood(sim); updatePanel(); });
+let resetArmed = 0;
 $('reset').addEventListener('click', () => {
-  if (!confirm('Start a brand-new civilization? New Beginnings will be lost.')) return;
+  // Two-tap confirm (window.confirm is blocked in sandboxed frames).
+  const now = performance.now();
+  if (now - resetArmed > 4000) {
+    resetArmed = now;
+    $('reset').textContent = 'Tap again to reset';
+    hint(`This replaces ${sim.state.settlement} with a brand-new civilization.`, true);
+    setTimeout(() => { if (performance.now() - resetArmed >= 4000) $('reset').textContent = 'New world'; }, 4100);
+    return;
+  }
+  resetArmed = 0;
+  $('reset').textContent = 'New world';
   sim = createSim(Math.floor(Math.random() * 2 ** 31));
   renderer.selectedId = null;
   renderer.disp.clear();
   lastLogLength = 0;
   save();
+  setTool('inspect');
   updatePanel();
 });
 
