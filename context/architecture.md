@@ -13,7 +13,10 @@ src/sim/                    the simulation — pure, deterministic, no DOM
 src/ui/
   render.js                 canvas renderer; reads state, never writes it
   main.js                   loop, input, panel, localStorage persistence
+  score.js                  pure soundtrack rules: piano phrases, sound modes, pause/night mix
+  ambience.js               Web Audio engine: synthesized waves + piano (real time, ignores sim speed)
 tests/sim.test.js           deterministic rule tests (node:test)
+tests/score.test.js         soundtrack rule tests
 scripts/                    serve.mjs (local server), soak.mjs (headless days), browser-check.mjs (Playwright smoke)
 ```
 

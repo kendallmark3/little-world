@@ -1,12 +1,14 @@
 // Browser entry point: wires the simulation, the clock, the renderer, input, and persistence.
 import {
   createSim, deserialize, serialize, step, stats, plantTree, placeHouse, tillField, addFood,
-  homeOf, formatTime, dayOf, TASKS,
+  homeOf, formatTime, dayOf, TASKS, isNight, minuteOf,
 } from '../sim/sim.js';
 import { canPlantAt, canBuildAt, canTillAt } from '../sim/world.js';
 import { TRAITS } from '../sim/names.js';
 import { createClock, advanceClock, SPEEDS } from '../sim/clock.js';
 import { createRenderer, render, TILE } from './render.js';
+import { createAmbience, startAmbience, setAmbienceMode, updateAmbience } from './ambience.js';
+import { MODES, MODE_LABELS, nextMode } from './score.js';
 
 const SAVE_KEY = 'little-world.save.v1';
 const PREFS_KEY = 'little-world.prefs.v1';
@@ -16,6 +18,7 @@ const $ = (id) => document.getElementById(id);
 const canvas = $('world');
 const renderer = createRenderer(canvas);
 const clock = createClock();
+const ambience = createAmbience();
 
 let sim = loadOrCreate();
 let lastFrame = performance.now();
@@ -48,12 +51,13 @@ function loadOrCreate() {
 
 function save() {
   try { storage()?.setItem(SAVE_KEY, serialize(sim)); } catch { /* storage full or unavailable */ }
-  try { storage()?.setItem(PREFS_KEY, JSON.stringify({ speed: clock.speed })); } catch { /* ignore */ }
+  try { storage()?.setItem(PREFS_KEY, JSON.stringify({ speed: clock.speed, sound: ambience.mode })); } catch { /* ignore */ }
 }
 
 try {
   const prefs = JSON.parse(storage()?.getItem(PREFS_KEY) || '{}');
   if (SPEEDS.includes(prefs.speed)) clock.speed = prefs.speed;
+  if (MODES.includes(prefs.sound)) ambience.mode = prefs.sound;
 } catch { /* ignore */ }
 
 addEventListener('pagehide', save);
@@ -69,6 +73,7 @@ function frame(now) {
   const ticks = advanceClock(clock, dt);
   for (let i = 0; i < ticks; i++) step(sim);
   render(renderer, sim, clock, dt);
+  updateAmbience(ambience, { paused: clock.paused, night: isNight(minuteOf(sim.state.tick)) });
   if (now - lastPanel > 250) { updatePanel(); lastPanel = now; }
   if (now - lastSave > 5000) { save(); lastSave = now; }
   requestAnimationFrame(frame);
@@ -110,6 +115,42 @@ function hint(text, warn = false) {
   el.classList.toggle('warn', warn);
 }
 
+// ---------------------------------------------------------------------------
+// Sound — browsers only allow audio after a user gesture, so it begins on the first tap or key.
+// ---------------------------------------------------------------------------
+
+const SOUND_ICONS = { both: '🌊', waves: '🌊', piano: '🎹', off: '🔇' };
+
+function showSound() {
+  const b = $('sound');
+  b.innerHTML = `${SOUND_ICONS[ambience.mode]}<span class="lbl"> ${MODE_LABELS[ambience.mode]}</span>`;
+  b.setAttribute('aria-label', `Sound: ${MODE_LABELS[ambience.mode]}`);
+  b.classList.toggle('muted', ambience.mode === 'off');
+}
+
+let soundJustStarted = false;
+
+function cycleSound() {
+  // If this tap is what first woke the audio, let it start the current mode rather than skip past it.
+  if (soundJustStarted) { soundJustStarted = false; return; }
+  setAmbienceMode(ambience, nextMode(ambience.mode));
+  if (ambience.mode !== 'off') startAmbience(ambience);
+  showSound();
+  save();
+}
+
+function firstGesture(e) {
+  soundJustStarted = ambience.mode !== 'off' && !!e.target.closest?.('#sound');
+  removeEventListener('pointerdown', firstGesture, true);
+  removeEventListener('keydown', firstGesture, true);
+  if (ambience.mode !== 'off') startAmbience(ambience);
+}
+addEventListener('pointerdown', firstGesture, true);
+addEventListener('keydown', firstGesture, true);
+
+$('sound').addEventListener('click', cycleSound);
+showSound();
+
 $('play').addEventListener('click', () => setPaused(!clock.paused));
 for (const b of document.querySelectorAll('#speeds button')) b.addEventListener('click', () => setSpeed(Number(b.dataset.speed)));
 for (const b of document.querySelectorAll('#tools button')) b.addEventListener('click', () => setTool(b.dataset.tool));
@@ -138,6 +179,7 @@ $('reset').addEventListener('click', () => {
 
 addEventListener('keydown', (e) => {
   if (e.target.closest('input, textarea')) return;
+  if (e.code === 'KeyM') cycleSound();
   if (e.code === 'Space') { e.preventDefault(); setPaused(!clock.paused); }
   const speedKey = { Digit1: 1, Digit2: 3, Digit3: 10, Digit4: 30 }[e.code];
   if (speedKey) setSpeed(speedKey);
@@ -309,4 +351,4 @@ updatePanel();
 requestAnimationFrame(frame);
 
 // Handy for debugging in the console.
-window.littleWorld = { get sim() { return sim; }, clock, renderer, save, TILE, formatTime, dayOf, TASKS };
+window.littleWorld = { get sim() { return sim; }, clock, renderer, ambience, save, TILE, formatTime, dayOf, TASKS };

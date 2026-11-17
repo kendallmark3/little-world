@@ -34,6 +34,7 @@ button { font: inherit; color: inherit; }
 .btn:hover { border-color: var(--ink-3); }
 .btn.icon { width: 36px; height: 34px; padding: 0; display: grid; place-items: center; font-size: 14px; }
 .btn.subtle { color: var(--ink-2); }
+.btn.muted { color: var(--ink-3); }
 
 .seg { display: inline-flex; background: #ebebf0; border-radius: 980px; padding: 3px; }
 .seg button {

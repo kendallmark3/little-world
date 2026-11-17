@@ -27,6 +27,7 @@ Or open `index.html` from any static server. Works in modern desktop and mobile 
 | 🏠 Build house (H) | Marks a site. Builders still have to haul 16 wood and raise the walls. |
 | 🌾 Till field (F) | A new 2×2 field. A farmer will come and sow it. |
 | 🍞 Add food | A shipment of 20 food arrives at the granary |
+| 🌊 Sound (M) | Cycles Waves + piano → Waves → Piano → Sound off. Starts on your first tap (browser rule). |
 
 `?seed=42&fresh` in the URL starts a reproducible world.
 
@@ -36,6 +37,7 @@ Or open `index.html` from any static server. Works in modern desktop and mobile 
 - **Occupations.** Farmers sow, tend, and harvest. Gatherers pick berries and chop wood. Builders haul lumber and raise houses. Laborers fill whatever gap is biggest.
 - **Rook** keeps people on task (they work faster when encouraged) and rallies everyone when food runs low. **Doctor** sells every meal, buys every harvest, and throws a free market day when his purse gets fat. If you can't pay, it goes on the tab, and nobody likes being on Doctor's tab. **Jenny** has a green thumb.
 - **The settlement grows itself.** When beds run short, Rook starts a new house. Travelers arrive when there's room, food, and good spirits. Unhappy people eventually leave. Starving people can die.
+- **A soundtrack that breathes with the world.** Waves roll in and wash out; a soft piano wanders through a slow C-major loop. The piano rests when you pause and goes quiet at night. All of it is synthesized live in the browser (`src/ui/ambience.js`, rules in `src/ui/score.js`) — no audio files.
 - **Everything in the Chronicle actually happened.** Every stat is real simulation state.
 
 ![Night in New Beginnings](docs/images/little-world-night.png)
