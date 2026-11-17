@@ -119,7 +119,7 @@ node scripts/agent-world-check.mjs          # Playwright: chooser, Agent World, 
 node scripts/browser-check.mjs              # Playwright: Little World regression
 ```
 
-`agent-world.html?seed=42&config=competitive` opens a specific experiment. Controls: Start / Pause / Resume (Space), 1× 3× 10× 30× (keys 1–4), Mixed / Cooperative / Competitive, Seed + Reset, Compare worlds (runs all three for ten simulated minutes on the current seed), tap any agent or structure (or a line in the feed) to inspect it.
+`agent-world.html?seed=42&config=competitive` opens a specific experiment. Controls: Start / Pause / Resume (Space), 1× 3× 10× 30× (keys 1–4), Mixed / Cooperative / Competitive, Seed + Reset, Compare worlds (runs all three for ten simulated minutes on the current seed), 🔊 Sound on / 🔇 Sound off (M; the Little World soundtrack, starting on your first tap), tap any agent or structure (or a line in the feed) to inspect it.
 
 ## Known limitations
 

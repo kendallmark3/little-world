@@ -39,6 +39,12 @@ try {
   check('ten agents populate the world', (await page.evaluate(() => window.agentWorld.sim.state.agents.length)) === 10);
 
   await page.click('#play');
+  check('sound starts with the first tap and the button says so', (await page.evaluate(() => window.agentWorld.ambience.ctx?.state)) === 'running' && (await page.textContent('#sound')).includes('Sound on'));
+  await page.click('#sound');
+  const off = await page.evaluate(() => window.agentWorld.ambience.mode);
+  check('one tap turns sound off', off === 'off' && (await page.textContent('#sound')).includes('Sound off'));
+  await page.click('#sound');
+  check('another tap turns it back on', (await page.evaluate(() => window.agentWorld.ambience.mode)) !== 'off' && (await page.textContent('#sound')).includes('Sound on'));
   await page.click('#speeds button[data-speed="1"]');
   const a0 = await page.evaluate(() => window.agentWorld.sim.state.tick);
   await page.waitForTimeout(2000);

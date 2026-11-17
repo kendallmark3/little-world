@@ -6,7 +6,7 @@ import { structById, agentById, domainById, effectiveReliability, linkedIds, isC
 import { createClock, advanceClock, SPEEDS } from '../sim/clock.js';
 import { createAgentRenderer, renderAgentWorld, agentAt, structureAt } from './agentworld-render.js';
 import { createAmbience, startAmbience, setAmbienceMode, updateAmbience } from './ambience.js';
-import { MODES, MODE_LABELS, nextMode } from './score.js';
+import { MODES } from './score.js';
 
 const PREFS_KEY = 'agent-world.prefs.v1';
 const EXPERIMENT_TICKS = 10 * TICKS_PER_MINUTE;
@@ -131,17 +131,20 @@ addEventListener('keydown', (e) => {
   if (e.code === 'Escape') { renderer.selectedAgentId = null; renderer.selectedStructId = null; updatePanel(); }
 });
 
-// Sound: the same synthesized soundtrack as Little World.
-const SOUND_ICONS = { both: '🌊', waves: '🌊', piano: '🎹', off: '🔇' };
+// Sound: the same synthesized soundtrack as Little World, as a simple on/off switch.
 function showSound() {
   const b = $('sound');
-  b.innerHTML = `${SOUND_ICONS[ambience.mode]}<span class="lbl"> ${MODE_LABELS[ambience.mode]}</span>`;
-  b.classList.toggle('muted', ambience.mode === 'off');
+  const on = ambience.mode !== 'off';
+  b.textContent = on ? '🔊 Sound on' : '🔇 Sound off';
+  b.setAttribute('aria-pressed', String(on));
+  b.setAttribute('aria-label', on ? 'Sound on — tap to turn off' : 'Sound off — tap to turn on');
+  b.classList.toggle('muted', !on);
 }
 let soundJustStarted = false;
 function cycleSound() {
+  // If this tap is what first woke the audio, it simply starts the sound that is already on.
   if (soundJustStarted) { soundJustStarted = false; return; }
-  setAmbienceMode(ambience, nextMode(ambience.mode));
+  setAmbienceMode(ambience, ambience.mode === 'off' ? 'both' : 'off');
   if (ambience.mode !== 'off') startAmbience(ambience);
   showSound();
   savePrefs();
