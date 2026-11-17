@@ -405,3 +405,29 @@ Civilization Development
 Introduce new buildings, technologies, infrastructure, trade routes, and competing settlements.
 
 The world may eventually evolve across multiple historical eras.
+
+---
+
+# Delta 001 — Ambient soundtrack
+<!-- 2026-11-17 · Mark -->
+
+## Observation
+The world is pleasant to watch but silent. While the settlement is building, it should feel calm.
+
+## Keep
+Everything in v0.1. No backend, no paid services, no external assets that need licensing.
+
+## Change
+Add soft background sound while the world runs: ocean waves crashing on a beach, and/or gentle piano.
+- Sound is synthesized in the browser (Web Audio): waves from filtered noise that swells, crests and washes out; a sparse, generative piano in C major with a soft room reverb.
+- One control cycles **Waves + piano → Waves → Piano → Sound off** (key `M`); the choice is remembered.
+- The piano plays while the world runs and rests when it is paused; the sea keeps breathing. Nights are quieter piano, slightly more sea.
+- Music runs in real time — it never speeds up with the simulation (same principle as rendering time).
+
+## New Boundary
+Browsers block audio until the player interacts, so sound begins on the first tap or key press. On iPhone the ring/silent switch can mute web audio.
+
+## Evidence
+- Unit tests: phrases deterministic, in key, in range, soft; mix rules for pause/night/modes.
+- Browser check: no audio before a gesture; running after one; pause rests the piano; mode cycles and persists across reload; no page errors.
+- A rendered preview of the actual engine output, judged by ear by Mark.
