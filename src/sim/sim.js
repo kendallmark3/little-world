@@ -39,7 +39,7 @@ export const RULES = {
   berryRegrowMinutes: 720,
   foodShipment: 20,
   mealPrice: 1,
-  marketDayPurse: 25,
+  marketDayPurse: 30,
 };
 
 const TASKS = {
@@ -278,6 +278,13 @@ function updatePerson(sim, p, m) {
   p.unhappyMinutes = p.happiness < 15 ? p.unhappyMinutes + 1 : Math.max(0, p.unhappyMinutes - 2);
 
   if (p.health <= 0) return die(sim, p, p.hunger >= 95 ? 'hunger' : 'exhaustion');
+  p.starvingMinutes = p.hunger >= 90 ? (p.starvingMinutes || 0) + 1 : 0;
+  if (p.starvingMinutes >= 600 && p.health < 70 && p.task?.kind !== 'leave' && s.food <= 0) {
+    cancelTask(s, p);
+    p.carrying = null;
+    addLog(sim, `${p.name} left ${s.settlement} in search of food.`);
+    return startTask(sim, p, 'leave', { x: 0, y: ROAD_Y }, { reason: 'Starving — leaving to find food' });
+  }
   if (p.unhappyMinutes >= MINUTES_PER_DAY && p.task?.kind !== 'leave') {
     cancelTask(s, p);
     addLog(sim, `${p.name} gave up on ${s.settlement} and set off down the west road.`);
@@ -389,7 +396,8 @@ function pickBerries(sim, p, urgent) {
 
 function chop(sim, p) {
   const s = sim.state;
-  if (s.wood >= 50 && !siteNeedingWood(s)) return false;
+  const needy = siteNeedingWood(s);
+  if (s.wood >= 50 || (needy && s.wood >= needy.woodNeeded - needy.woodDelivered - needy.incoming + 10)) return false;
   const tree = nearest(s.trees.filter((t) => !t.claimedBy && t.growth >= 1), p);
   if (!tree) return false;
   const reason = siteNeedingWood(s) ? 'The building site needs lumber' : 'The settlement needs wood';
@@ -666,7 +674,6 @@ function complete(sim, p, m) {
       if (target) {
         target.encouraged = 240;
         target.happiness = clamp(target.happiness + 2);
-        payWage(sim, p, 1); // Doctor grudgingly pays Rook a "management fee"
       }
       return finishTask(s, p);
     }
@@ -778,6 +785,16 @@ function hourly(sim, m) {
     s.flags.foodEmpty = false;
   }
 
+  // Farmland: when food is short and every field is busy, Rook has a new field cleared.
+  if (s.flags.foodLow && isWorkHours(m) && s.fields.length < pop / 1.4 && !s.fields.some((f) => f.state === 'fallow')) {
+    const spot = findFieldSpot(s);
+    if (spot) {
+      s.fields.push({ id: s.nextId++, x: spot.x, y: spot.y, state: 'fallow', growth: 0, tended: 0, claimedBy: null });
+      const lead = s.people.find((o) => o.occupation === 'Leader');
+      addLog(sim, `${lead ? lead.name : 'The farmers'} had a new field cleared. Fields: ${s.fields.length}.`);
+    }
+  }
+
   // Housing: plan a new house when beds are running out.
   const free = freeBeds(s);
   if (!activeSite(s) && free <= 1 && pop < 40 && isWorkHours(m)) {
@@ -813,7 +830,7 @@ function dawn(sim) {
     const spoiled = Math.floor(surplus * 0.15);
     s.food -= spoiled;
     s.totals.spoiled = (s.totals.spoiled || 0) + spoiled;
-    addLog(sim, `${spoiled} food spoiled in the overflowing granary.`);
+    if (spoiled >= 3) addLog(sim, `${spoiled} food spoiled in the overflowing granary.`);
   }
   s.dayStart = { food: s.food, wood: s.wood };
   if (day === 2 && !s.flags.doctorJoke) {
@@ -826,14 +843,14 @@ function morning(sim) {
   const s = sim.state;
   const day = dayOf(s.tick);
   const merchant = doctor(s);
-  if (merchant && merchant.coins >= RULES.marketDayPurse) {
+  if (merchant && merchant.coins >= RULES.marketDayPurse && day - (s.marketDay || -99) >= 5) {
     s.marketDay = day;
     addLog(sim, `${merchant.name} declared a market day — meals are free today!`);
   }
 
   // Newcomers arrive when the settlement looks like a good place to live.
   const pop = s.people.length;
-  if (pop > 0 && freeBeds(s) >= 1 && s.food >= pop * 2 && averageHappiness(s) >= 50) {
+  if (pop > 0 && freeBeds(s) >= 1 && s.food >= pop * 3 && !s.flags.foodLow && averageHappiness(s) >= 48) {
     const occupation = neededOccupation(s);
     const p = makePerson(s, { name: newName(s), occupation, trait: pick(s, ['diligent', 'cheerful', 'sleepy', 'curious', 'steady']), age: randInt(s, 17, 45) }, 0, ROAD_Y);
     p.happiness = 70;
@@ -899,6 +916,21 @@ function completeSite(sim, site, p) {
 
 function newSite(s, x, y, byPlayer) {
   return { id: s.nextId++, type: 'site', x, y, woodNeeded: RULES.houseWood, woodDelivered: 0, incoming: 0, progress: 0, byPlayer, style: randInt(s, 0, 3) };
+}
+
+function findFieldSpot(s) {
+  const near = s.fields.length ? s.fields : [{ x: VILLAGE.x, y: VILLAGE.y + 6 }];
+  let best = null;
+  let bd = Infinity;
+  for (let y = 2; y < s.h - 3; y++) {
+    for (let x = 1; x < s.w - 3; x++) {
+      if (Math.abs(y - ROAD_Y) <= 1 || Math.abs(y + 1 - ROAD_Y) <= 1) continue;
+      if (!canTillAt(s, x, y)) continue;
+      const d = Math.min(...near.map((f) => Math.abs(f.x - x) + Math.abs(f.y - y))) + Math.abs(x - VILLAGE.x) * 0.2;
+      if (d < bd) { bd = d; best = { x, y }; }
+    }
+  }
+  return best;
 }
 
 function findBuildSpot(s) {

@@ -14,15 +14,17 @@ Numbers live in `RULES` in `src/sim/sim.js`.
 
 ## Work
 - **Farmer:** harvest ripe fields (3 food, Jenny +2), sow fallow ones, tend growing ones (60% faster growth for 4 h).
-- **Gatherer:** pick berries when food is low or wood is plentiful, otherwise chop trees (4 wood each; the tree is gone).
+- **Gatherer:** pick berries when food is low or wood is plentiful, otherwise chop trees (4 wood each; the tree is gone). Nobody chops once the stockpile holds 50 wood.
 - **Builder:** raise house sites (16 wood, 4 hours of work), fetch lumber, chop when the stockpile is empty.
 - **Laborer:** whatever is short — food first, then lumber, then fields.
 - **Rook (Leader):** builds when there is a site, otherwise walks over and encourages a worker (+20% work speed for 4 h). When food runs low he rallies everyone to food work.
-- **Doctor (Merchant):** runs the market stall. He sells every meal for 1 coin and buys produce and labor from his purse. When his purse reaches 25 he declares a market day: free meals. Nobody else gets paid if Doctor is broke. Coins are conserved.
+- **Doctor (Merchant):** runs the market stall. He sells every meal for 1 coin and buys produce and labor from his purse. When his purse reaches 30 (at most every 5 days) he declares a market day: free meals. Nobody else gets paid if Doctor is broke. Coins are conserved.
 
 ## Settlement
 - When free beds drop to one or fewer, Rook starts a new house near the village.
-- At 08:00 a traveler arrives if there is a free bed, food ≥ 2 per person, and average happiness ≥ 50. They take the occupation the village is shortest on.
+- At 08:00 a traveler arrives if there is a free bed, food ≥ 3 per person, no food alarm, and average happiness ≥ 48. They take the occupation the village is shortest on.
+- When food is low and no field lies fallow, Rook has a new field cleared near the others.
+- Someone starving for 10 hours with an empty granary leaves to find food. Population is capped at about 40 (no new houses beyond that).
 - At dawn, grain beyond 6 per person spoils at 15%.
 
 ## Player
