@@ -1,4 +1,5 @@
 // Canvas renderer. Reads simulation state; never mutates it.
+// Terrain, water, trees, people and floating labels are exported for reuse by Agent World.
 // Display positions are kept here, separate from simulation positions, so that accelerating
 // the simulation shows a smooth time-lapse instead of inhabitants teleporting at silly speeds.
 import { T } from '../sim/world.js';
@@ -132,7 +133,7 @@ function updateDisplayPositions(r, s, clock, dtMs) {
 // Terrain
 // ---------------------------------------------------------------------------
 
-function buildTerrain(r, s) {
+export function buildTerrain(r, s) {
   const c = document.createElement('canvas');
   c.width = s.w * TILE * 2;
   c.height = s.h * TILE * 2;
@@ -193,7 +194,7 @@ function buildTerrain(r, s) {
   r.terrainKey = s.seed;
 }
 
-function drawWater(r, s) {
+export function drawWater(r, s) {
   const ctx = r.ctx;
   ctx.strokeStyle = 'rgba(255,255,255,0.35)';
   ctx.lineWidth = 1;
@@ -259,7 +260,7 @@ function drawField(ctx, f, time) {
   }
 }
 
-function drawTree(ctx, t, time, seed) {
+export function drawTree(ctx, t, time, seed) {
   const cx = t.x * TILE + TILE / 2;
   const by = t.y * TILE + TILE - 3;
   const g = Math.max(0.25, t.growth);
@@ -443,7 +444,7 @@ function drawSites(r, s) {
   }
 }
 
-function drawPerson(r, p, d) {
+export function drawPerson(r, p, d) {
   const ctx = r.ctx;
   const x = d.x * TILE;
   const y = d.y * TILE;
@@ -458,7 +459,7 @@ function drawPerson(r, p, d) {
     ctx.beginPath(); ctx.moveTo(x - 1.5, y - 1 - bob); ctx.lineTo(x - 1.5 + sw, y + 3); ctx.moveTo(x + 1.5, y - 1 - bob); ctx.lineTo(x + 1.5 - sw, y + 3); ctx.stroke();
     ctx.lineWidth = 1;
   }
-  ctx.fillStyle = OCC_COLORS[p.occupation] || '#777';
+  ctx.fillStyle = p.color || OCC_COLORS[p.occupation] || '#777';
   roundRect(ctx, x - 4.5, y - 8 - bob, 9, 9, 3.5); ctx.fill();
   ctx.fillStyle = SKIN[p.skin % SKIN.length];
   ctx.beginPath(); ctx.arc(x, y - 11 - bob, 3.8, 0, Math.PI * 2); ctx.fill();
@@ -560,7 +561,7 @@ function drawLighting(r, s) {
   ctx.restore();
 }
 
-function glow(ctx, x, y, rad, color) {
+export function glow(ctx, x, y, rad, color) {
   const g = ctx.createRadialGradient(x, y, 0, x, y, rad);
   g.addColorStop(0, color);
   g.addColorStop(1, 'rgba(0,0,0,0)');
@@ -572,7 +573,7 @@ function glow(ctx, x, y, rad, color) {
 // Feedback
 // ---------------------------------------------------------------------------
 
-function drawFloats(r, dtMs) {
+export function drawFloats(r, dtMs) {
   const ctx = r.ctx;
   ctx.font = '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   ctx.textAlign = 'center';
@@ -605,7 +606,7 @@ function drawHover(r, s) {
   ctx.strokeRect((x + ox) * TILE + 0.5, (y + oy) * TILE + 0.5, span * TILE - 1, span * TILE - 1);
 }
 
-function roundRect(ctx, x, y, w, h, rad) {
+export function roundRect(ctx, x, y, w, h, rad) {
   ctx.beginPath();
   if (w <= 0 || h <= 0) return;
   const rr = Math.min(rad, w / 2, h / 2);

@@ -1,3 +1,10 @@
+# The Little World · Agent World
+
+Two simulations on one engine. Open the app and **Choose Your World**:
+
+- **[Little World](#the-little-world)**: the original civilization simulation. Ten settlers in New Beginnings.
+- **[Agent World](#agent-world)**: an autonomous AI engineering civilization. Ten software agents build an ecosystem through stigmergy and game theory, with no central coordinator.
+
 # The Little World
 
 **A living, evolving civilization you can watch, influence, and come back to.**
@@ -16,7 +23,7 @@ No install, no dependencies.
 npm start            # http://localhost:5173
 ```
 
-Or open `index.html` from any static server. Works in modern desktop and mobile browsers. The world saves itself to your browser every few seconds; reload and you're back in the same civilization. **New world** starts over.
+Or open `index.html` from any static server and pick **Little World** (`little-world.html`). Works in modern desktop and mobile browsers. The world saves itself to your browser every few seconds; reload and you're back in the same civilization. **New world** starts over.
 
 | Control | What it does |
 | --- | --- |
@@ -29,7 +36,7 @@ Or open `index.html` from any static server. Works in modern desktop and mobile 
 | 🍞 Add food | A shipment of 20 food arrives at the granary |
 | 🌊 Sound (M) | Cycles Waves + piano → Waves → Piano → Sound off. Starts on your first tap (browser rule). |
 
-`?seed=42&fresh` in the URL starts a reproducible world.
+`little-world.html?seed=42&fresh` starts a reproducible world.
 
 ## What's alive
 
@@ -68,3 +75,22 @@ Learn more at [learnteachmaster.org](https://learnteachmaster.org) and [intent-d
 ## Not in v0.1 (on purpose)
 
 Politics, war, genetics, markets, weather, physics, calculus, multiplayer, and more than one settlement. These are the future exploration themes in the intent: agriculture and ecology, economics, game theory, rates of change, physics, migration, and competing civilizations.
+
+# Agent World
+
+**INTENT-002 — The Stigmergic Engineering Experiment.** Ten autonomous engineering agents (3 Developers, 2 Architects, 2 Testers, 2 Explorers, 1 Optimizer) build repositories, data stores, services, APIs, shared libraries and integrations across eight discoverable domains. Nobody assigns work. An unfinished API, a defect, an untested service or an isolated one changes the environment, and that change is what the next agent responds to.
+
+![Agent World](docs/images/agent-world.png)
+
+- **Tap any agent** to see what it perceives (structures, agents, signal strengths, what it remembers), every option it scored with the exact terms of its utility, the probability of each, why it chose, and how its recent actions turned out. Its perception radius and options are drawn on the map.
+- **Tap any building or link** to see its real state: reliability, complexity, cost, usage, known and hidden defects, dependencies, connections, who built it, who is working on it, and its history.
+- **Cooperative, Competitive, or Mixed** strategy mixes, a **seed**, and **Compare worlds**, which runs all three for ten simulated minutes on the same seed.
+- At 1×, simulated time is real time, so the ten-minute experiment takes ten minutes. 30× takes twenty seconds.
+
+How it works (decision math, signal propagation, strategies, integrity, limitations): [context/agent-world.md](context/agent-world.md). What actually happened in the experiment, with real traces: [docs/agent-world-evidence.md](docs/agent-world-evidence.md). Inspired by Peter Small's work on intelligent objects, artificial life, stigmergy and game theory.
+
+```bash
+npm start                                   # then choose Agent World, or open /agent-world.html?seed=42&config=mixed
+node scripts/agent-experiment.mjs --write   # rerun the initial experiment and rewrite the evidence
+node scripts/agent-world-check.mjs          # Playwright: chooser, Agent World, inspectors, compare, mobile
+```

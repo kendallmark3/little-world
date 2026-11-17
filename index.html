@@ -3,63 +3,53 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Little World</title>
+  <title>Choose Your World</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .chooser { max-width: 980px; margin: 0 auto; padding: 56px 24px 40px; }
+    .chooser h1 { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; margin: 0; }
+    .chooser .lede { font-size: 17px; color: var(--ink-2); margin: 10px 0 32px; max-width: 640px; line-height: 1.45; }
+    .worlds { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .world { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .2s, box-shadow .2s; }
+    .world:hover { transform: translateY(-2px); box-shadow: 0 12px 34px rgba(0,0,0,0.08); }
+    .world img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #8bbf6a; }
+    .world .body { padding: 18px 20px 20px; }
+    .world h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -0.01em; }
+    .world p { margin: 6px 0 0; font-size: 14px; color: var(--ink-2); line-height: 1.45; }
+    .world .go { margin-top: 14px; font-size: 14px; font-weight: 600; color: var(--accent); }
+    .foot { margin-top: 28px; font-size: 12px; color: var(--ink-3); }
+    .foot a { color: var(--ink-2); }
+    @media (max-width: 720px) { .worlds { grid-template-columns: 1fr; } .chooser { padding: 28px 14px; } .chooser h1 { font-size: 30px; } }
+  </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <h1>The Little World</h1>
-      <p id="subtitle">New Beginnings</p>
-    </div>
-    <div class="controls">
-      <div class="group" role="group" aria-label="Time">
-        <button id="play" class="btn icon" title="Pause / resume (space)" aria-label="Pause">⏸</button>
-        <div class="seg" id="speeds">
-          <button data-speed="1" class="on">1×</button>
-          <button data-speed="3">3×</button>
-          <button data-speed="10">10×</button>
-          <button data-speed="30">30×</button>
+  <main class="chooser">
+    <h1>Choose Your World</h1>
+    <p class="lede">Two simulations on one engine. Nobody is scripted in either; you watch, nudge, and ask why.</p>
+    <div class="worlds">
+      <a class="world" id="go-little" href="little-world.html">
+        <img src="docs/images/little-world-morning.png" alt="New Beginnings, a small farming village by a river">
+        <div class="body">
+          <h2>Little World</h2>
+          <p>The original civilization simulation. Ten settlers in New Beginnings farm, build, trade with Doctor, and try to survive.</p>
+          <div class="go">Enter Little World →</div>
         </div>
-      </div>
-      <div class="group" role="group" aria-label="Tools">
-        <div class="seg" id="tools">
-          <button data-tool="inspect" class="on" title="Inspect inhabitants (I)">🔍<span class="lbl"> Inspect</span></button>
-          <button data-tool="tree" title="Plant a tree (T)">🌳<span class="lbl"> Plant tree</span></button>
-          <button data-tool="house" title="Mark out a house (H)">🏠<span class="lbl"> Build house</span></button>
-          <button data-tool="till" title="Till a field (F)">🌾<span class="lbl"> Till field</span></button>
+      </a>
+      <a class="world" id="go-agent" href="agent-world.html">
+        <img src="docs/images/agent-world.png" alt="Agent World, ten software agents building services, APIs and links">
+        <div class="body">
+          <h2>Agent World</h2>
+          <p>An autonomous AI engineering civilization. Ten agents build a software ecosystem through stigmergy and game theory — no central coordinator.</p>
+          <div class="go">Enter Agent World →</div>
         </div>
-        <button id="food" class="btn" title="Send a shipment of food">🍞<span class="lbl"> Add food</span></button>
-      </div>
-      <button id="sound" class="btn" title="Background sound: waves and soft piano (M)" aria-label="Sound: Waves + piano">🌊<span class="lbl"> Waves + piano</span></button>
-      <button id="reset" class="btn subtle" title="Start a new civilization">New world</button>
+      </a>
     </div>
-  </header>
-
-  <main class="layout">
-    <section class="stage">
-      <div class="clock" id="clock">Day 1 · 06:00</div>
-      <canvas id="world" aria-label="The Little World"></canvas>
-      <div class="hint" id="hint">Tap an inhabitant to see what they are doing.</div>
-    </section>
-
-    <aside class="panel">
-      <section class="card">
-        <div class="stats" id="stats"></div>
-      </section>
-      <section class="card" id="inspector"></section>
-      <section class="card">
-        <h2>Chronicle</h2>
-        <ol class="log" id="log"></ol>
-      </section>
-      <section class="card">
-        <h2>Inhabitants</h2>
-        <ul class="people" id="people"></ul>
-      </section>
-    </aside>
+    <p class="foot">Built with Intent-Driven Engineering · <a href="https://learnteachmaster.org">learnteachmaster.org</a></p>
   </main>
-
-  <script type="module" src="src/ui/main.js"></script>
+  <script>
+    // Carry ?seed=… (and friends) through to whichever world is chosen.
+    if (location.search) for (const a of document.querySelectorAll('.world')) a.href += location.search;
+  </script>
 </body>
 </html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Little World</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <style>.brand .worlds { font-size: 12px; color: var(--accent); text-decoration: none; display: inline-block; margin-bottom: 1px; }</style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <a class="worlds" href="index.html" title="Choose your world">‹ Worlds</a>
+      <h1>The Little World</h1>
+      <p id="subtitle">New Beginnings</p>
+    </div>
+    <div class="controls">
+      <div class="group" role="group" aria-label="Time">
+        <button id="play" class="btn icon" title="Pause / resume (space)" aria-label="Pause">⏸</button>
+        <div class="seg" id="speeds">
+          <button data-speed="1" class="on">1×</button>
+          <button data-speed="3">3×</button>
+          <button data-speed="10">10×</button>
+          <button data-speed="30">30×</button>
+        </div>
+      </div>
+      <div class="group" role="group" aria-label="Tools">
+        <div class="seg" id="tools">
+          <button data-tool="inspect" class="on" title="Inspect inhabitants (I)">🔍<span class="lbl"> Inspect</span></button>
+          <button data-tool="tree" title="Plant a tree (T)">🌳<span class="lbl"> Plant tree</span></button>
+          <button data-tool="house" title="Mark out a house (H)">🏠<span class="lbl"> Build house</span></button>
+          <button data-tool="till" title="Till a field (F)">🌾<span class="lbl"> Till field</span></button>
+        </div>
+        <button id="food" class="btn" title="Send a shipment of food">🍞<span class="lbl"> Add food</span></button>
+      </div>
+      <button id="sound" class="btn" title="Background sound: waves and soft piano (M)" aria-label="Sound: Waves + piano">🌊<span class="lbl"> Waves + piano</span></button>
+      <button id="reset" class="btn subtle" title="Start a new civilization">New world</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="stage">
+      <div class="clock" id="clock">Day 1 · 06:00</div>
+      <canvas id="world" aria-label="The Little World"></canvas>
+      <div class="hint" id="hint">Tap an inhabitant to see what they are doing.</div>
+    </section>
+
+    <aside class="panel">
+      <section class="card">
+        <div class="stats" id="stats"></div>
+      </section>
+      <section class="card" id="inspector"></section>
+      <section class="card">
+        <h2>Chronicle</h2>
+        <ol class="log" id="log"></ol>
+      </section>
+      <section class="card">
+        <h2>Inhabitants</h2>
+        <ul class="people" id="people"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <script type="module" src="src/ui/main.js"></script>
+</body>
+</html>

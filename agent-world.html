@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent World</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%90%9C%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="agentworld.css">
+</head>
+<body class="aw">
+  <header class="topbar">
+    <div class="brand">
+      <a class="worlds" href="index.html" title="Choose your world">‹ Worlds</a>
+      <h1>Agent World</h1>
+      <p id="subtitle">The Stigmergic Engineering Experiment</p>
+    </div>
+    <div class="controls">
+      <div class="group" role="group" aria-label="Time">
+        <button id="play" class="btn start" title="Start / pause / resume (space)">▶ Start</button>
+        <div class="seg" id="speeds">
+          <button data-speed="1">1×</button>
+          <button data-speed="3" class="on">3×</button>
+          <button data-speed="10">10×</button>
+          <button data-speed="30">30×</button>
+        </div>
+      </div>
+      <div class="group" role="group" aria-label="Experiment">
+        <div class="seg" id="configs">
+          <button data-config="mixed" class="on" title="Cooperative, competitive and adaptive agents">Mixed</button>
+          <button data-config="cooperative" title="Most agents cooperate">Cooperative</button>
+          <button data-config="competitive" title="Most agents compete">Competitive</button>
+        </div>
+        <label class="seed" title="Random seed — the same seed and world reproduce the same run">Seed <input id="seed" type="number" inputmode="numeric" min="0" step="1"></label>
+        <button id="reset" class="btn subtle" title="Restart the experiment with this seed and world">Reset</button>
+        <button id="compare" class="btn subtle" title="Run all three worlds for ten simulated minutes with this seed">Compare worlds</button>
+      </div>
+      <button id="sound" class="btn" title="Sound on / off (M)" aria-pressed="true">🔊 Sound on</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="stage">
+      <div class="clock" id="clock">0:00 · Ready</div>
+      <div class="legend" id="legend"></div>
+      <canvas id="world" aria-label="Agent World"></canvas>
+      <div class="hint" id="hint">Press Start. Tap an agent to see what it perceives and why it decides; tap a building to inspect it.</div>
+      <section class="card feed-card">
+        <h2>Activity</h2>
+        <ol class="log" id="log"></ol>
+      </section>
+    </section>
+
+    <aside class="panel">
+      <section class="card">
+        <div class="stats" id="stats"></div>
+        <div class="trends" id="trends"></div>
+      </section>
+      <section class="card" id="inspector"></section>
+      <section class="card" id="compare-card" hidden>
+        <h2>Compare worlds · 10 simulated minutes</h2>
+        <div id="compare-out"></div>
+      </section>
+      <section class="card">
+        <h2>Agents</h2>
+        <ul class="people" id="agents"></ul>
+      </section>
+      <section class="card">
+        <h2>Structures</h2>
+        <div class="chips" id="structures"></div>
+      </section>
+    </aside>
+  </main>
+
+  <script type="module" src="src/ui/agentworld-main.js"></script>
+</body>
+</html>
