@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 400" role="img" aria-label="A small farming village by a river at golden hour">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffcf94"/>
+      <stop offset=".5" stop-color="#ffe6bf"/>
+      <stop offset="1" stop-color="#f3f1cf"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#fff3c4" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6cc0ef"/>
+      <stop offset="1" stop-color="#2e8ad6"/>
+    </linearGradient>
+    <pattern id="crops" width="8" height="9" patternUnits="userSpaceOnUse">
+      <rect width="8" height="9" fill="#8a5a3b"/>
+      <rect y="6" width="8" height="2" fill="#6f4529"/>
+      <path d="M4 6 L2.5 2.5 M4 6 L5.5 2.5 M4 6 V1.5" stroke="#9bd35e" stroke-width="1.3" stroke-linecap="round"/>
+    </pattern>
+    <pattern id="tilled" width="8" height="6" patternUnits="userSpaceOnUse">
+      <rect width="8" height="6" fill="#94603f"/>
+      <rect y="4" width="8" height="1.6" fill="#6f4529"/>
+    </pattern>
+    <symbol id="tree" viewBox="-14 -30 28 34" overflow="visible">
+      <ellipse cx="0" cy="3" rx="10" ry="3" fill="#2f6b2a" opacity=".25"/>
+      <rect x="-2" y="-6" width="4" height="9" rx="1" fill="#7a5233"/>
+      <circle cx="0" cy="-14" r="11" fill="#3f9a48"/>
+      <circle cx="-3.5" cy="-17" r="5" fill="#5bb562"/>
+    </symbol>
+    <symbol id="person" viewBox="-6 -20 12 22" overflow="visible">
+      <ellipse cx="0" cy="1" rx="5" ry="1.6" fill="#000" opacity=".18"/>
+      <rect x="-4" y="-11" width="8" height="11" rx="3.5" fill="currentColor"/>
+      <circle cx="0" cy="-14.5" r="4.2" fill="#f0c493"/>
+      <path d="M-4.2 -15 A4.2 4.2 0 0 1 4.2 -15 Z" fill="#5a3a24"/>
+    </symbol>
+  </defs>
+
+  <!-- sky -->
+  <rect width="600" height="400" fill="url(#sky)"/>
+  <circle cx="455" cy="118" r="110" fill="url(#glow)"/>
+  <circle cx="455" cy="118" r="38" fill="#ffb54c"/>
+  <circle cx="455" cy="118" r="30" fill="#ffc768"/>
+  <g fill="#fff" opacity=".85">
+    <ellipse cx="110" cy="70" rx="38" ry="12"/><ellipse cx="135" cy="62" rx="24" ry="12"/>
+    <ellipse cx="300" cy="44" rx="30" ry="9"/><ellipse cx="318" cy="38" rx="18" ry="9"/>
+  </g>
+  <g fill="none" stroke="#7a5a48" stroke-width="1.6" stroke-linecap="round">
+    <path d="M200 92 q5 -5 10 0 q5 -5 10 0"/>
+    <path d="M232 104 q4 -4 8 0 q4 -4 8 0"/>
+  </g>
+
+  <!-- hills -->
+  <path d="M0 175 C80 135 160 150 240 165 C330 182 420 130 600 150 V400 H0 Z" fill="#b9dd94"/>
+  <path d="M0 210 C120 180 230 200 320 196 C420 192 500 176 600 190 V400 H0 Z" fill="#94cc6c"/>
+  <path d="M0 240 C150 226 300 232 600 226 V400 H0 Z" fill="#79bd55"/>
+
+  <!-- distant trees on the ridge -->
+  <g opacity=".75">
+    <use xlink:href="#tree" x="22" y="158" width="18" height="22"/>
+    <use xlink:href="#tree" x="38" y="152" width="16" height="20"/>
+    <use xlink:href="#tree" x="540" y="140" width="18" height="22"/>
+    <use xlink:href="#tree" x="560" y="144" width="16" height="20"/>
+    <use xlink:href="#tree" x="370" y="160" width="16" height="20"/>
+  </g>
+
+  <!-- river with sandy banks -->
+  <path d="M452 196 C430 240 492 270 458 312 C430 348 446 378 432 400" fill="none" stroke="#ead6a4" stroke-width="44" stroke-linecap="round"/>
+  <path d="M452 196 C430 240 492 270 458 312 C430 348 446 378 432 400" fill="none" stroke="url(#water)" stroke-width="30" stroke-linecap="round"/>
+  <g stroke="#bfe6fb" stroke-width="2" stroke-linecap="round" opacity=".9">
+    <path d="M448 232 h8"><animate attributeName="opacity" values="1;.2;1" dur="3s" repeatCount="indefinite"/></path>
+    <path d="M466 272 h8"><animate attributeName="opacity" values=".2;1;.2" dur="3.4s" repeatCount="indefinite"/></path>
+    <path d="M444 352 h8"><animate attributeName="opacity" values="1;.3;1" dur="2.8s" repeatCount="indefinite"/></path>
+  </g>
+
+  <!-- road and bridge -->
+  <path d="M0 302 C120 296 260 300 420 298 L500 296 C540 296 570 300 600 302 V312 C570 310 540 306 500 306 L420 308 C260 310 120 306 0 312 Z" fill="#dcc49a"/>
+  <rect x="430" y="292" width="46" height="18" rx="2" fill="#8a5a33"/>
+  <g stroke="#6a4224" stroke-width="1.4">
+    <path d="M436 292 v18 M443 292 v18 M450 292 v18 M457 292 v18 M464 292 v18 M471 292 v18"/>
+  </g>
+
+  <!-- fields -->
+  <rect x="40" y="330" width="62" height="40" rx="3" fill="url(#crops)"/>
+  <rect x="112" y="330" width="62" height="40" rx="3" fill="url(#crops)"/>
+  <rect x="184" y="330" width="62" height="40" rx="3" fill="url(#tilled)"/>
+  <rect x="256" y="330" width="62" height="40" rx="3" fill="url(#crops)"/>
+
+  <!-- houses -->
+  <g>
+    <rect x="70" y="250" width="40" height="28" fill="#fff4e0"/>
+    <path d="M64 252 L90 232 L116 252 Z" fill="#4c9a5a"/>
+    <rect x="86" y="264" width="8" height="14" fill="#8a5a33"/>
+    <rect x="74" y="258" width="8" height="7" fill="#9ccbf0"/>
+    <rect x="98" y="258" width="8" height="7" fill="#ffe08a"/>
+  </g>
+  <g>
+    <rect x="140" y="258" width="40" height="28" fill="#fff4e0"/>
+    <path d="M134 260 L160 240 L186 260 Z" fill="#4a6fb5"/>
+    <rect x="156" y="272" width="8" height="14" fill="#8a5a33"/>
+    <rect x="168" y="266" width="8" height="7" fill="#ffe08a"/>
+    <rect x="170" y="240" width="6" height="12" fill="#7a5233"/>
+    <g fill="#fff" opacity=".7">
+      <circle cx="173" cy="234" r="4"><animate attributeName="cy" values="236;214" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="4s" repeatCount="indefinite"/></circle>
+      <circle cx="176" cy="226" r="5"><animate attributeName="cy" values="230;204" dur="4s" begin="2s" repeatCount="indefinite"/><animate attributeName="opacity" values=".8;0" dur="4s" begin="2s" repeatCount="indefinite"/></circle>
+    </g>
+  </g>
+  <!-- barn -->
+  <g>
+    <rect x="216" y="250" width="58" height="38" fill="#c8453a"/>
+    <path d="M210 252 L245 226 L280 252 Z" fill="#9c3029"/>
+    <rect x="234" y="264" width="22" height="24" fill="#fff4e0"/>
+    <path d="M234 264 L256 288 M256 264 L234 288" stroke="#c8453a" stroke-width="2.5"/>
+    <circle cx="210" cy="286" r="4" fill="#e9c97a"/><circle cx="203" cy="287" r="3.5" fill="#e0bb66"/>
+  </g>
+  <!-- market stall -->
+  <g>
+    <rect x="296" y="268" width="36" height="16" fill="#9a6a3d"/>
+    <path d="M292 268 h44 l-4 -10 h-36 Z" fill="#fff"/>
+    <path d="M296 258 h6 l-2 10 h-6 Z M308 258 h6 l-1 10 h-6 Z M320 258 h6 l0 10 h-6 Z M332 258 h4 l0 10 h-5 Z" fill="#3aa7a0"/>
+    <circle cx="304" cy="266" r="2.6" fill="#e2483d"/><circle cx="312" cy="266" r="2.6" fill="#f2c14e"/><circle cx="320" cy="266" r="2.6" fill="#7cc35a"/>
+  </g>
+  <g>
+    <rect x="352" y="246" width="36" height="26" fill="#fff4e0"/>
+    <path d="M346 248 L370 230 L394 248 Z" fill="#d7653c"/>
+    <rect x="366" y="258" width="8" height="14" fill="#8a5a33"/>
+    <rect x="356" y="254" width="7" height="6" fill="#ffe08a"/>
+  </g>
+
+  <!-- trees -->
+  <use xlink:href="#tree" x="10" y="250" width="34" height="40"/>
+  <use xlink:href="#tree" x="196" y="214" width="26" height="32"/>
+  <use xlink:href="#tree" x="398" y="238" width="30" height="36"/>
+  <use xlink:href="#tree" x="500" y="220" width="30" height="36"/>
+  <use xlink:href="#tree" x="528" y="246" width="34" height="40"/>
+  <use xlink:href="#tree" x="556" y="216" width="28" height="34"/>
+  <use xlink:href="#tree" x="512" y="330" width="34" height="40"/>
+  <use xlink:href="#tree" x="548" y="352" width="34" height="40"/>
+  <use xlink:href="#tree" x="340" y="336" width="32" height="38"/>
+  <use xlink:href="#tree" x="372" y="352" width="28" height="34"/>
+  <!-- berry bushes -->
+  <g>
+    <circle cx="406" cy="330" r="9" fill="#3f8f45"/><circle cx="402" cy="327" r="1.8" fill="#e2483d"/><circle cx="410" cy="332" r="1.8" fill="#e2483d"/><circle cx="407" cy="325" r="1.8" fill="#e2483d"/>
+    <circle cx="20" cy="356" r="9" fill="#3f8f45"/><circle cx="17" cy="353" r="1.8" fill="#e2483d"/><circle cx="24" cy="358" r="1.8" fill="#e2483d"/>
+  </g>
+
+  <!-- people -->
+  <use xlink:href="#person" x="64" y="322" width="12" height="22" style="color:#4caf50"/>
+  <use xlink:href="#person" x="138" y="324" width="12" height="22" style="color:#4caf50"/>
+  <use xlink:href="#person" x="276" y="322" width="12" height="22" style="color:#e2483d"/>
+  <use xlink:href="#person" x="283" y="276" width="12" height="22" style="color:#26a69a"/>
+  <g>
+    <use xlink:href="#person" x="0" y="0" width="12" height="22" style="color:#8e5bd1"/>
+    <animateTransform attributeName="transform" type="translate" values="120 290; 196 290; 120 290" dur="14s" repeatCount="indefinite"/>
+  </g>
+  <use xlink:href="#person" x="404" y="290" width="12" height="22" style="color:#f08a24"/>
+  <use xlink:href="#person" x="496" y="292" width="12" height="22" style="color:#8e5bd1"/>
+</svg>

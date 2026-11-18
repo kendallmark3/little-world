@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 600 400" role="img" aria-label="Software agents building a glowing network of services at night">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1433"/>
+      <stop offset=".6" stop-color="#262b66"/>
+      <stop offset="1" stop-color="#4a3f86"/>
+    </linearGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f7a4f"/>
+      <stop offset="1" stop-color="#1d5138"/>
+    </linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5a3f2a"/>
+      <stop offset="1" stop-color="#2e2018"/>
+    </linearGradient>
+    <radialGradient id="hubglow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#e9ddff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#b38cff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+    <clipPath id="board"><path d="M300 178 L572 270 L300 362 L28 270 Z"/></clipPath>
+
+    <symbol id="db" viewBox="-12 -24 24 28" overflow="visible">
+      <ellipse cx="0" cy="2" rx="12" ry="4" fill="#000" opacity=".3"/>
+      <path d="M-10 -16 V-2 A10 4 0 0 0 10 -2 V-16 Z" fill="#1fa39a"/>
+      <path d="M-10 -9 A10 4 0 0 0 10 -9" fill="none" stroke="#7fe0d6" stroke-width="1.2"/>
+      <ellipse cx="0" cy="-16" rx="10" ry="4" fill="#5fd6cb"/>
+    </symbol>
+    <symbol id="api" viewBox="-12 -24 24 28" overflow="visible">
+      <ellipse cx="0" cy="2" rx="12" ry="4" fill="#000" opacity=".3"/>
+      <path d="M-11 0 V-10 A11 11 0 0 1 11 -10 V0 H5 V-9 A5 5 0 0 0 -5 -9 V0 Z" fill="#8a5cf0"/>
+      <path d="M0 -21 V-26" stroke="#c6b0ff" stroke-width="1.5"/><circle cx="0" cy="-27" r="2" fill="#ffd54f"/>
+    </symbol>
+    <symbol id="svc" viewBox="-13 -22 26 26" overflow="visible">
+      <ellipse cx="0" cy="2" rx="13" ry="4" fill="#000" opacity=".3"/>
+      <rect x="-12" y="-18" width="24" height="18" rx="3" fill="#2f6fe0"/>
+      <g fill="#bcd6ff"><rect x="-9" y="-14" width="5" height="3"/><rect x="-2.5" y="-14" width="5" height="3"/><rect x="4" y="-14" width="5" height="3"/><rect x="-9" y="-8" width="5" height="3"/><rect x="-2.5" y="-8" width="5" height="3"/><rect x="4" y="-8" width="5" height="3"/></g>
+    </symbol>
+    <symbol id="agent" viewBox="-8 -26 16 28" overflow="visible">
+      <ellipse cx="0" cy="1" rx="5" ry="1.6" fill="#000" opacity=".3"/>
+      <rect x="-4" y="-11" width="8" height="11" rx="3.5" fill="currentColor"/>
+      <circle cx="0" cy="-14.5" r="4.2" fill="#e9b98a"/>
+      <path d="M-4.2 -15 A4.2 4.2 0 0 1 4.2 -15 Z" fill="#3a2a20"/>
+      <path d="M4 -8 V-24" stroke="#ddd" stroke-width="1"/>
+      <path d="M4 -24 L11 -21.5 L4 -19 Z" fill="#ff5a4f"/>
+    </symbol>
+  </defs>
+
+  <!-- night sky -->
+  <rect width="600" height="400" fill="url(#sky)"/>
+  <g fill="#fff">
+    <circle cx="40" cy="30" r="1.2"/><circle cx="92" cy="68" r=".9"/><circle cx="150" cy="22" r="1.4"/>
+    <circle cx="210" cy="56" r="1"/><circle cx="262" cy="18" r="1.2"/><circle cx="330" cy="44" r=".9"/>
+    <circle cx="384" cy="16" r="1.3"/><circle cx="420" cy="74" r="1"/><circle cx="560" cy="34" r="1.2"/>
+    <circle cx="582" cy="96" r=".9"/><circle cx="20" cy="110" r="1"/><circle cx="120" cy="128" r=".8"/>
+    <circle cx="470" cy="120" r=".8"/><circle cx="350" cy="104" r=".9"/><circle cx="240" cy="120" r=".8"/>
+    <circle cx="180" cy="88" r="1.6"><animate attributeName="opacity" values="1;.2;1" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="520" cy="60" r="1.6"><animate attributeName="opacity" values=".3;1;.3" dur="4s" repeatCount="indefinite"/></circle>
+  </g>
+  <mask id="crescent"><rect width="600" height="400" fill="#fff"/><circle cx="510" cy="64" r="20" fill="#000"/></mask>
+  <circle cx="500" cy="70" r="22" fill="#fff6d8" mask="url(#crescent)"/>
+
+  <!-- floating island board -->
+  <path d="M28 270 L300 362 L572 270 L572 290 L300 382 L28 290 Z" fill="url(#side)"/>
+  <path d="M300 178 L572 270 L300 362 L28 270 Z" fill="url(#land)"/>
+  <g clip-path="url(#board)" stroke="#7fe0b0" stroke-opacity=".12" stroke-width="1">
+    <path d="M28 270 L300 178 M74 285 L346 194 M120 301 L392 209 M165 316 L437 224 M210 331 L482 239 M255 347 L527 255 M300 362 L572 270"/>
+    <path d="M300 178 L572 270 M255 194 L527 285 M210 209 L482 301 M165 224 L437 316 M120 239 L392 331 M74 255 L346 347 M28 270 L300 362"/>
+  </g>
+
+  <!-- districts -->
+  <g fill="#9cf0c4" fill-opacity=".08" stroke="#9cf0c4" stroke-opacity=".45" stroke-dasharray="4 3">
+    <path d="M190 222 L260 246 L190 270 L120 246 Z"/>
+    <path d="M400 214 L470 238 L400 262 L330 238 Z"/>
+    <path d="M300 300 L370 324 L300 348 L230 324 Z"/>
+  </g>
+
+  <!-- links (glow + line) -->
+  <g fill="none" stroke-linecap="round">
+    <g stroke="#b38cff" stroke-width="6" opacity=".55" filter="url(#blur)">
+      <path id="l1" d="M300 268 L190 238"/><path id="l2" d="M300 268 L402 230"/><path id="l3" d="M300 268 L300 320"/>
+      <path id="l4" d="M190 238 L402 230"/><path id="l5" d="M402 230 L452 288"/><path id="l6" d="M300 320 L452 288"/>
+      <path id="l7" d="M190 238 L150 300"/>
+    </g>
+    <g stroke="#e3d4ff" stroke-width="1.6">
+      <use xlink:href="#l1"/><use xlink:href="#l2"/><use xlink:href="#l3"/><use xlink:href="#l4"/><use xlink:href="#l5"/><use xlink:href="#l6"/>
+    </g>
+    <use xlink:href="#l7" stroke="#e3d4ff" stroke-width="1.6" stroke-dasharray="4 4">
+      <animate attributeName="stroke-dashoffset" values="0;-16" dur="1.2s" repeatCount="indefinite"/>
+    </use>
+  </g>
+
+  <!-- packets travelling along links -->
+  <g fill="#fff">
+    <circle r="2.6"><animateMotion dur="2.4s" repeatCount="indefinite" path="M300 268 L190 238"/></circle>
+    <circle r="2.6"><animateMotion dur="2.8s" repeatCount="indefinite" path="M402 230 L300 268"/></circle>
+    <circle r="2.6"><animateMotion dur="3.2s" repeatCount="indefinite" path="M190 238 L402 230"/></circle>
+    <circle r="2.6"><animateMotion dur="2.2s" repeatCount="indefinite" path="M300 320 L452 288"/></circle>
+    <circle r="2.6"><animateMotion dur="2s" repeatCount="indefinite" path="M300 268 L300 320"/></circle>
+    <circle r="2.6"><animateMotion dur="2.6s" repeatCount="indefinite" path="M452 288 L402 230"/></circle>
+  </g>
+
+  <!-- hub -->
+  <circle cx="300" cy="268" r="40" fill="url(#hubglow)">
+    <animate attributeName="r" values="34;44;34" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <ellipse cx="300" cy="272" rx="20" ry="8" fill="#f4f0ff"/>
+  <rect x="293" y="252" width="14" height="18" rx="3" fill="#fff" stroke="#8a5cf0" stroke-width="1.2"/>
+  <path d="M296 258 h8 M296 262 h8 M296 266 h5" stroke="#8a5cf0" stroke-width="1.4" stroke-linecap="round"/>
+
+  <!-- services -->
+  <use xlink:href="#db" x="178" y="214" width="24" height="28"/>
+  <use xlink:href="#svc" x="208" y="236" width="26" height="26"/>
+  <use xlink:href="#api" x="390" y="206" width="24" height="28"/>
+  <use xlink:href="#svc" x="420" y="220" width="26" height="26"/>
+  <use xlink:href="#db" x="440" y="264" width="24" height="28"/>
+  <use xlink:href="#api" x="288" y="296" width="24" height="28"/>
+  <use xlink:href="#svc" x="252" y="314" width="26" height="26"/>
+  <!-- service under construction -->
+  <g>
+    <path d="M140 300 L160 307 L140 314 L120 307 Z" fill="none" stroke="#ffd54f" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <rect x="132" y="290" width="16" height="14" fill="#c99a52" opacity=".85"/>
+    <path d="M132 294 h16 M132 298 h16 M136 290 v14 M144 290 v14" stroke="#8a6532" stroke-width="1"/>
+    <circle cx="160" cy="282" r="5" fill="none" stroke="#fff" stroke-width="1.6" stroke-dasharray="20 12">
+      <animateTransform attributeName="transform" type="rotate" from="0 160 282" to="360 160 282" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- trees on the island edge -->
+  <g>
+    <circle cx="60" cy="262" r="8" fill="#246b3c"/><circle cx="76" cy="270" r="7" fill="#2b7a45"/>
+    <circle cx="540" cy="262" r="8" fill="#246b3c"/><circle cx="526" cy="272" r="7" fill="#2b7a45"/>
+    <circle cx="300" cy="196" r="7" fill="#246b3c"/><circle cx="316" cy="200" r="6" fill="#2b7a45"/>
+    <circle cx="300" cy="350" r="7" fill="#246b3c"/>
+  </g>
+
+  <!-- agents -->
+  <use xlink:href="#agent" x="232" y="244" width="16" height="28" style="color:#f08a24"/>
+  <use xlink:href="#agent" x="352" y="250" width="16" height="28" style="color:#8e5bd1"/>
+  <use xlink:href="#agent" x="150" y="292" width="16" height="28" style="color:#2f8fe0"/>
+  <use xlink:href="#agent" x="470" y="236" width="16" height="28" style="color:#4caf50"/>
+  <g>
+    <use xlink:href="#agent" x="0" y="0" width="16" height="28" style="color:#26a69a"/>
+    <animateTransform attributeName="transform" type="translate" values="330 300; 380 284; 330 300" dur="9s" repeatCount="indefinite"/>
+  </g>
+  <g>
+    <use xlink:href="#agent" x="196" y="270" width="16" height="28" style="color:#e2483d"/>
+    <text x="214" y="270" font-family="sans-serif" font-size="8" font-weight="700" fill="#cfe0ff">z<tspan dy="-4">z</tspan>
+      <animate attributeName="opacity" values="1;.2;1" dur="2.4s" repeatCount="indefinite"/>
+    </text>
+  </g>
+</svg>
